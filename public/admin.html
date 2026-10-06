@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Administração - Barbearia Style</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            BARBEARIA STYLE
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Início
+            </a>
+
+            <a href="agendamento.html">
+                Agendamento
+            </a>
+
+            <a href="#" id="logout">
+                Sair
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="admin">
+
+        <h1>
+            Área administrativa
+        </h1>
+
+        <p class="subtitulo">
+            Gerencie os agendamentos da barbearia.
+        </p>
+
+
+        <div class="tabela-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Cliente</th>
+
+                        <th>Telefone</th>
+
+                        <th>Serviço</th>
+
+                        <th>Barbeiro</th>
+
+                        <th>Data</th>
+
+                        <th>Horário</th>
+
+                        <th>Ação</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="listaAgendamentos">
+
+                    <tr>
+
+                        <td colspan="7">
+                            Carregando...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 Barbearia Style
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        const token =
+            localStorage.getItem("adminToken");
+
+
+        // Se não tiver token, voltar para login
+        if (!token) {
+
+            window.location.href =
+                "admin-login.html";
+
+        }
+
+
+        // ==============================
+        // CARREGAR AGENDAMENTOS
+        // ==============================
+
+        async function carregarAgendamentos() {
+
+            const tabela =
+                document.getElementById(
+                    "listaAgendamentos"
+                );
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        "/agendamentos",
+                        {
+                            headers: {
+                                "Authorization": token
+                            }
+                        }
+                    );
+
+
+                // Token inválido
+                if (resposta.status === 401) {
+
+                    localStorage.removeItem(
+                        "adminToken"
+                    );
+
+                    window.location.href =
+                        "admin-login.html";
+
+                    return;
+
+                }
+
+
+                const agendamentos =
+                    await resposta.json();
+
+
+                tabela.innerHTML = "";
+
+
+                if (agendamentos.length === 0) {
+
+                    tabela.innerHTML = `
+                        <tr>
+                            <td colspan="7">
+                                Nenhum agendamento encontrado.
+                            </td>
+                        </tr>
+                    `;
+
+                    return;
+                }
+
+
+                agendamentos.forEach(
+                    agendamento => {
+
+                        const linha =
+                            document.createElement("tr");
+
+
+                        linha.innerHTML = `
+
+                            <td>
+                                ${agendamento.nome}
+                            </td>
+
+                            <td>
+                                ${agendamento.telefone}
+                            </td>
+
+                            <td>
+                                ${agendamento.servico}
+                            </td>
+
+                            <td>
+                                ${agendamento.barbeiro}
+                            </td>
+
+                            <td>
+                                ${agendamento.data}
+                            </td>
+
+                            <td>
+                                ${agendamento.horario}
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn-excluir"
+                                    onclick="
+                                    excluirAgendamento(
+                                    ${agendamento.id}
+                                    )">
+
+                                    Excluir
+
+                                </button>
+
+                            </td>
+
+                        `;
+
+
+                        tabela.appendChild(linha);
+
+                    }
+                );
+
+            } catch (erro) {
+
+                tabela.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            Erro ao carregar agendamentos.
+                        </td>
+                    </tr>
+                `;
+
+            }
+
+        }
+
+
+        // ==============================
+        // EXCLUIR
+        // ==============================
+
+        async function excluirAgendamento(id) {
+
+            const confirmar =
+                confirm(
+                    "Deseja realmente excluir este agendamento?"
+                );
+
+
+            if (!confirmar) {
+                return;
+            }
+
+
+            try {
+
+                const resposta =
+                    await fetch(
+                        `/agendamentos/${id}`,
+                        {
+                            method: "DELETE",
+
+                            headers: {
+                                "Authorization": token
+                            }
+                        }
+                    );
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                alert(resultado.mensagem);
+
+
+                carregarAgendamentos();
+
+
+            } catch (erro) {
+
+                alert(
+                    "Erro ao excluir agendamento."
+                );
+
+            }
+
+        }
+
+
+        // ==============================
+        // LOGOUT
+        // ==============================
+
+        document
+            .getElementById("logout")
+            .addEventListener(
+                "click",
+                async function(event) {
+
+                    event.preventDefault();
+
+
+                    await fetch(
+                        "/logout",
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Authorization": token
+                            }
+                        }
+                    );
+
+
+                    localStorage.removeItem(
+                        "adminToken"
+                    );
+
+
+                    window.location.href =
+                        "admin-login.html";
+
+                }
+            );
+
+
+        carregarAgendamentos();
+
+    </script>
+
+</body>
+
+</html>

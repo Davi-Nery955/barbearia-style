@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login Administrativo</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            BARBEARIA STYLE
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Início
+            </a>
+
+            <a href="agendamento.html">
+                Agendamento
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="login-container">
+
+        <div class="login-box">
+
+            <h1>
+                Área administrativa
+            </h1>
+
+            <p>
+                Entre com sua conta de administrador.
+            </p>
+
+
+            <form id="loginForm">
+
+                <label>
+                    Usuário
+                </label>
+
+                <input
+                    type="text"
+                    id="usuario"
+                    placeholder="Digite o usuário"
+                    required
+                >
+
+
+                <label>
+                    Senha
+                </label>
+
+                <input
+                    type="password"
+                    id="senha"
+                    placeholder="Digite sua senha"
+                    required
+                >
+
+
+                <button type="submit">
+                    Entrar
+                </button>
+
+            </form>
+
+
+            <div id="loginMensagem"></div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 Barbearia Style
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        const formulario =
+            document.getElementById("loginForm");
+
+
+        formulario.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const usuario =
+                    document.getElementById("usuario").value;
+
+                const senha =
+                    document.getElementById("senha").value;
+
+
+                const mensagem =
+                    document.getElementById("loginMensagem");
+
+
+                try {
+
+                    const resposta =
+                        await fetch("/login", {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                usuario,
+                                senha
+                            })
+
+                        });
+
+
+                    const resultado =
+                        await resposta.json();
+
+
+                    if (!resposta.ok) {
+
+                        mensagem.textContent =
+                            resultado.mensagem;
+
+                        mensagem.className = "erro";
+
+                        return;
+                    }
+
+
+                    // Guardar token
+                    localStorage.setItem(
+                        "adminToken",
+                        resultado.token
+                    );
+
+
+                    mensagem.textContent =
+                        "Login realizado!";
+
+                    mensagem.className = "sucesso";
+
+
+                    // Ir para área administrativa
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "admin.html";
+
+                    }, 500);
+
+
+                } catch (erro) {
+
+                    mensagem.textContent =
+                        "Erro ao conectar ao servidor.";
+
+                    mensagem.className = "erro";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

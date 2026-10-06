@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agendamento | Barbearia Style</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- MENU -->
+
+    <header>
+
+        <div class="logo">
+            BARBEARIA STYLE
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Início
+            </a>
+
+            <a href="index.html#servicos">
+                Serviços
+            </a>
+
+            <a href="agendamento.html" class="ativo">
+                Agendamento
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- CONTEÚDO -->
+
+    <main class="pagina-agendamento">
+
+        <section class="titulo-agendamento">
+
+            <span>BARBEARIA STYLE</span>
+
+            <h1>
+                Agende seu horário
+            </h1>
+
+            <p>
+                Escolha o serviço, barbeiro, data e horário
+                que deseja.
+            </p>
+
+        </section>
+
+
+        <section class="area-formulario">
+
+            <div class="formulario-agendamento">
+
+                <div class="cabecalho-formulario">
+
+                    <h2>
+                        Faça seu agendamento
+                    </h2>
+
+                    <p>
+                        Preencha seus dados abaixo
+                    </p>
+
+                </div>
+
+
+                <form id="formAgendamento">
+
+                    <!-- NOME -->
+
+                    <div class="campo">
+
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            placeholder="Digite seu nome"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- TELEFONE -->
+
+                    <div class="campo">
+
+                        <label for="telefone">
+                            Telefone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="telefone"
+                            placeholder="(75) 99999-9999"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- SERVIÇO -->
+
+                    <div class="campo">
+
+                        <label for="servico">
+                            Serviço
+                        </label>
+
+                        <select id="servico" required>
+
+                            <option value="">
+                                Escolha um serviço
+                            </option>
+
+                            <option value="Corte de cabelo">
+                                Corte de cabelo - R$ 35
+                            </option>
+
+                            <option value="Barba">
+                                Barba - R$ 25
+                            </option>
+
+                            <option value="Corte + Barba">
+                                Corte + Barba - R$ 50
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- BARBEIRO -->
+
+                    <div class="campo">
+
+                        <label for="barbeiro">
+                            Barbeiro
+                        </label>
+
+                        <select id="barbeiro" required>
+
+                            <option value="">
+                                Escolha seu barbeiro
+                            </option>
+
+                            <option value="João">
+                                João
+                            </option>
+
+                            <option value="Carlos">
+                                Carlos
+                            </option>
+
+                            <option value="Pedro">
+                                Pedro
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="linha-campos">
+
+                        <!-- DATA -->
+
+                        <div class="campo">
+
+                            <label for="data">
+                                Data
+                            </label>
+
+                            <input
+                                type="date"
+                                id="data"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- HORÁRIO -->
+
+                        <div class="campo">
+
+                            <label for="horario">
+                                Horário
+                            </label>
+
+                            <select id="horario" required>
+
+                                <option value="">
+                                    Escolha
+                                </option>
+
+                                <option value="08:00">
+                                    08:00
+                                </option>
+
+                                <option value="09:00">
+                                    09:00
+                                </option>
+
+                                <option value="10:00">
+                                    10:00
+                                </option>
+
+                                <option value="11:00">
+                                    11:00
+                                </option>
+
+                                <option value="13:00">
+                                    13:00
+                                </option>
+
+                                <option value="14:00">
+                                    14:00
+                                </option>
+
+                                <option value="15:00">
+                                    15:00
+                                </option>
+
+                                <option value="16:00">
+                                    16:00
+                                </option>
+
+                                <option value="17:00">
+                                    17:00
+                                </option>
+
+                                <option value="18:00">
+                                    18:00
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BOTÃO -->
+
+                    <button
+                        type="submit"
+                        class="botao-agendar"
+                    >
+
+                        Confirmar agendamento
+
+                    </button>
+
+                </form>
+
+
+                <!-- MENSAGEM -->
+
+                <div id="mensagem"></div>
+
+            </div>
+
+
+            <!-- INFORMAÇÕES -->
+
+            <aside class="informacoes">
+
+                <h2>
+                    Por que agendar?
+                </h2>
+
+                <div class="info">
+
+                    <span>01</span>
+
+                    <div>
+
+                        <h3>
+                            Escolha seu horário
+                        </h3>
+
+                        <p>
+                            Escolha o melhor horário
+                            para você.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>02</span>
+
+                    <div>
+
+                        <h3>
+                            Escolha seu barbeiro
+                        </h3>
+
+                        <p>
+                            Selecione o profissional
+                            que deseja.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <span>03</span>
+
+                    <div>
+
+                        <h3>
+                            Confirme seu horário
+                        </h3>
+
+                        <p>
+                            Seu horário será registrado
+                            automaticamente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <p>
+            © 2026 Barbearia Style
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
