@@ -12,7 +12,7 @@ const PORT = 3000;
 // ================================
 
 const ADMIN_USUARIO = "admin";
-const ADMIN_SENHA = "123456";
+const ADMIN_SENHA = "administrador123456";
 
 // Sessões dos administradores
 const sessoes = new Set();
